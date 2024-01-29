@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: CTF-Back-End
+  version: 1.0.0
+servers:
+  - url: http://0.0.0.0:8000
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+  - name: Challenges
+paths:
+  /auth/signup/:
+    post:
+      tags:
+        - Auth
+      summary: SignUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: test3@gmail.com
+                username: test3
+                password: A12345678B
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login/:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: test2@gmail.com
+                password: A12345678B
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /challenges/:
+    get:
+      tags:
+        - Challenges
+      summary: Get Challenges
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /challenges/{id}:
+    get:
+      tags:
+        - Challenges
+      summary: Get Challenge
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /challenges/{id}/:
+    post:
+      tags:
+        - Challenges
+      summary: Submit flag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                flag: picoCTF{s4n1ty_v3r1f13d_1a94e0f9}
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+
